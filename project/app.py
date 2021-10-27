@@ -34,6 +34,15 @@ def index():
     return render_template('index.html', entries=entries)
 
 
+@app.route('/search/', methods=['GET'])
+def search():
+    query = request.args.get("query")
+    entries = db.session.query(models.Post)
+    if query:
+        return render_template('search.html', entries=entries, query=query)
+    return render_template('search.html')
+
+
 @app.route('/add', methods=['POST'])
 def add_entry():
     """Adds new post to the database."""
